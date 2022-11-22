@@ -1,7 +1,7 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
-date: '2022-11-01'
+title: "Incarceration Rate: What Makes People Go To Jail?"
+author: "Kaiyang Wu"
+date: '2022-11-20'
 output: html_document
 ---
 
@@ -11,35 +11,51 @@ source("../source/analysis.R")
 ```
 
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
 
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
+This report is going to address the different independent variables that may or may not correlate with the increasing incarceration rate in the U.S.
 
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
+## Introduction
 
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
+The incarceration rate in the U.S. has always been the first in the world, and it is getting even worse in recent years. In this report, I will be using the dataset from [Incarceration Trends Dataset](https://github.com/vera-institute/incarceration-trends) to discuss and address the potential correlations between independent variables and the incarceration rate. This dataset is believed to reveal some social issues for us, for example, the inequity of power and race or gender related discrimination. And the potential stakeholders are the government, the institutions and the private jail owners, who are largely affected by this dataset. The dataset can help the stakeholders doing decisions making and also policy making.
 
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
+The question I want to answer is, what features or causes can make people go to jail with biased jurisdiction? The events surrounding us have already given us a glimpse at the inequality of the jurisdiction in the U.S., and how exactly can those inequalities be presented through the data?
+
+## Data Summary
+
+In the most recent data, the average total jail population rate is `r avg_rate`, and then we can compare the total jail population in rural regions, which is `r avg_rate_rural`, it's easy to see that in rural regions, the rate is slightly higher. After that we can compare the total jail population of black people across the country, which is `r avg_rate_black`. This data, comparing to the total jail population rate, is enormous, suggesting potential inequality based on races.
+
+## Growth of the U.S. Prison Population
+
+```{r echo = FALSE}
+plot(plot_jail_pop_for_us())
 ```
 
-## Introduction 
-[TODO]
+This chart shows the total jail population in the U.S. from 1970 to 2018. From the chart, we can see the large increase since around 1980, and hit the record around 2008. After 2008, the jail population is mostly stable and slightly decreasing, but it's still very high, and it has got a little increase in recent years. My question is, what made the rate stablize in recent years?
 
-## Data Summary 
-[TODO]
+## Growth of Prison Population by State
 
-[TODO ... other sections ... See Canvas for details]
+```{r echo = FALSE, message = FALSE}
+plot(plot_jail_pop_by_states(c("WA", "CA", "OR", "NY", "TX", "FL", "MI")))
+```
 
-_All the very best with your work!_
+This chart shows the total jail population growth from 1970 to 2018 in seven different states, including Washington, California, Oregon, New York, Texas, Florida and Michigan. For Michigan, Washington and Oregon, the increase is pretty small. For California, Texas and Florida, it increased a lot. New York is in between the two groups. I think for the states where the rate increased a lot, they tend to have more crimes and more discriminations. My question is, what made Oregon have such low jail population?
 
+## Male Jail Population Versus County Population (Under 500000) in Most Recent Year (2018)
+
+```{r echo = FALSE, message = FALSE}
+plot(plot_prop_male_jail_pop_vs_county_pop())
+```
+
+Question: Is there any correlation with proportion of male jail population and the local county population?
+
+This chart shows the proportion of male jail population versus the local county population. From the chart, we can see that for counties under 50000 population, the proportion of male jail population shows variations, but for counties more than 50000 population, most of the jail population is male. And as the population goes larger, it's more likely that male is the dominant group of people in total jail population. There is a significant correlation with the two variables.
+
+## Proportion of Black People Jail Population in Washington State counties (2018)
+
+```{r echo = FALSE, message = FALSE}
+plot(plot_map_prop_black_jail_pop_wa())
+```
+
+Question: What county in Washington has the highest proportion of black people jail population?
+
+This chart shows the map of the proportion of black people jail population in Washington state, suggesting potential inequality taking place in King County, where there's the highest proportion of black people jail population.
